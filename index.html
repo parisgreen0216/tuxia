@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图匣 · Page Image Folders</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>" />
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">📦</span>
+        <span class="logo-text">图匣</span>
+      </div>
+      <div class="header-right">网页图片整理</div>
+    </header>
+
+    <!-- Hero / Input -->
+    <main class="main">
+      <section class="hero" id="hero">
+        <p class="eyebrow">PAGE IMAGE FOLDERS</p>
+        <h1 class="title">图匣</h1>
+        <p class="desc">
+          把网页上的图片收进文件夹。按用途、格式或尺寸整理，再打包下载。
+        </p>
+
+        <div class="input-row">
+          <input
+            type="url"
+            id="urlInput"
+            placeholder="粘贴网页地址，例如 wikipedia.org"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button id="startBtn" class="btn primary">
+            <span class="btn-icon">📥</span>
+            开始收图
+          </button>
+        </div>
+
+        <p class="hint">
+          部分网站用脚本加载图片，只能收到写在页面里的图。
+        </p>
+
+        <div class="examples">
+          <span class="examples-label">试试这些页面：</span>
+          <button class="example-btn" data-url="https://en.wikipedia.org/wiki/NASA">NASA 维基百科</button>
+          <button class="example-btn" data-url="https://www.nasa.gov">NASA 官网</button>
+          <button class="example-btn" data-url="https://unsplash.com">Unsplash</button>
+        </div>
+      </section>
+
+      <!-- Results -->
+      <section class="results hidden" id="results">
+        <div class="results-header">
+          <div class="results-info">
+            <h2 id="pageTitle">图片结果</h2>
+            <p id="statsText">共 0 张图片</p>
+          </div>
+          <div class="results-actions">
+            <button id="backBtn" class="btn ghost">← 返回</button>
+            <button id="downloadBtn" class="btn primary" disabled>
+              <span class="btn-icon">📦</span>
+              打包下载
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <div class="filter-group">
+            <label>整理方式</label>
+            <div class="tabs" id="organizeTabs">
+              <button class="tab active" data-mode="format">按格式</button>
+              <button class="tab" data-mode="size">按尺寸</button>
+              <button class="tab" data-mode="type">按用途</button>
+              <button class="tab" data-mode="all">全部</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label>筛选格式</label>
+            <div class="chips" id="formatChips"></div>
+          </div>
+        </div>
+
+        <!-- Image Grid -->
+        <div class="grid" id="imageGrid"></div>
+      </section>
+
+      <!-- Loading -->
+      <div class="loading hidden" id="loading">
+        <div class="spinner"></div>
+        <p>正在收集图片…</p>
+        <p class="loading-hint" id="loadingHint">解析页面中</p>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>图匣 · Page Image Folders</span>
+      <a href="https://github.com/parisgreen0216/tuxia" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
